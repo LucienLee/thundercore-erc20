@@ -25,9 +25,14 @@
           <hr/>
         </div>
       </div>
-
+      <div id="alert-slot"></div>
       <div class="row">
         <div class="card mx-auto" style="width: 360px;">
+          <div id="overlay" class="d-flex justify-content-center align-items-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
           <div class="card-header">
             MyToken Wallet
           </div>
@@ -50,6 +55,24 @@
         </div>
       </div>
     </div>
+    <template id="failed-alert">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Transfer Failed!</strong>
+        <div id="error-message"></div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </template>
+    <template id="success-alert">
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Transfer Successful!</strong>
+        <div id="success-message"></div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </template>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="src/app.js"></script>
   </body>

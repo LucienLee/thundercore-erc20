@@ -3,6 +3,8 @@
 This example for "Deploy ERC-20 Token on ThunderCore". This is set up from [Thunder Box](https://github.com/thundercore/thunder-box)
 The tutorial article is [here]().
 
+![screenshot]()
+
 ## Develop on Thunder Testnet and Mainnet
 
 0. Get the thunder tokens  
@@ -33,3 +35,19 @@ The tutorial article is [here]().
     # In .mnemonic file, put your mnemonic
     dog cat apple bird ...
     ```
+
+
+## Run client UI
+
+Get into client folder and install deps first.
+
+```bash
+cd client
+yarn install
+# or
+npm install
+```
+
+Then, `yarn start` or `npm start` would run the web UI at `http://localhost:1234`
+
+If you want to deploy that, `yarn build` would generate bundle file at `client/dist`.

@@ -48,13 +48,12 @@ const App = {
 
   handleTransfer: function(event) {
     event.preventDefault();
+    App.openLoading();
 
-    var amount = parseInt($('#transfer-amount').val());
-    var toAddress = $('#transfer-address').val();
+    const amount = parseInt($('#transfer-amount').val());
+    const toAddress = $('#transfer-address').val();
 
     console.log('Transfer ' + amount + ' TT to ' + toAddress);
-
-    var tutorialTokenInstance;
 
     web3.eth.getAccounts(function(error, accounts) {
       if (error) {
@@ -64,14 +63,19 @@ const App = {
       var account = accounts[0];
 
       App.contracts.TutorialToken.deployed().then(function(instance) {
-        tutorialTokenInstance = instance;
-
-        return tutorialTokenInstance.transfer(toAddress, amount, {from: account, gas: 100000});
+        return instance.transfer(toAddress, amount, {from: account, gas: 100000});
       }).then(function(result) {
-        alert('Transfer Successful!');
+        const $content = $($('#success-alert').html());
+        $content.find('#success-message').text(`Transaction ${result.tx}`);
+        $content.appendTo('#alert-slot');
+
         return App.getBalances();
       }).catch(function(err) {
         console.log(err.message);
+        const $content = $($('#failed-alert').html());
+        $content.find('#error-message').text(err.message);
+        $content.appendTo('#alert-slot');
+        App.closeloading();
       });
     });
   },
@@ -98,9 +102,20 @@ const App = {
         $('#MY-balance').text(balance);
       }).catch(function(err) {
         console.log(err.message);
+      }).finally(function(){
+        App.closeloading()
       });
     });
+  },
+
+  closeloading: function() {
+    $('#overlay').removeClass('d-flex').addClass('d-none');
+  },
+
+  openLoading: function() {
+    $('#overlay').removeClass('d-none').addClass('d-flex');
   }
+
 
 };
 
