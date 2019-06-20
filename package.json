@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "ThunderCore ERC 20 token example",
   "main": "index.js",
-  "repository": "git@github.com:thundercore/thunder-box.git",
+  "repository": "git@github.com:LucienLee/thundercore-erc20.git",
   "author": "Lucien Lee <lucien@lucienlee.cc>",
   "license": "MIT",
   "keywords": [

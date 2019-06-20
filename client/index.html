@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>TutorialToken - Wallet</title>
+
+    <!-- Bootstrap -->
+    <link href="src/index.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="row mt-3">
+        <div class="col">
+          <h1 class="text-center">MyToken</h1>
+          <hr/>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="card mx-auto" style="width: 360px;">
+          <div class="card-header">
+            MyToken Wallet
+          </div>
+          <div class="card-body">
+            <h4>Balance</h4>
+            <p>
+              <span id="MY-balance">0</span> <strong>MT</strong>
+            </p>
+            <h4>Transfer</h4>
+            <div class="form-group">
+              <label for="transfer-address">Address</label>
+              <input type="text" class="form-control" id="transfer-address" placeholder="0x...." />
+            </div>
+            <div class="form-group">
+                <label for="transfer-amount">Amount</label>
+              <input type="text" class="form-control" id="transfer-amount" placeholder="0" />
+            </div>
+            <button class="btn btn-primary btn-block" id="transfer-button" type="button">Transfer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="src/app.js"></script>
+  </body>
+</html>
