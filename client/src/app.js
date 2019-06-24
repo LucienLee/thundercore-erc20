@@ -1,11 +1,11 @@
-import Web3 from 'Web3';
-import TruffleContract from 'truffle-contract'
+import Web3 from "Web3";
+import TruffleContract from "truffle-contract";
 
 import $ from "jquery";
 import "popper.js";
-import 'bootstrap';
+import "bootstrap";
 
-import TutorialTokenArtifact from '../contracts/MyToken.json'
+import TutorialTokenArtifact from "../contracts/MyToken.json";
 
 const App = {
   web3Provider: null,
@@ -17,12 +17,14 @@ const App = {
 
   initWeb3: function() {
     // Initialize web3 and set the provider to the testRPC.
-    if (typeof web3 !== 'undefined') {
+    if (typeof web3 !== "undefined") {
       App.web3Provider = web3.currentProvider;
       web3 = new Web3(web3.currentProvider);
     } else {
       // set the provider you want from Web3.providers
-      App.web3Provider = new Web3.providers.HttpProvider('http://127.0.0.1:9545');
+      App.web3Provider = new Web3.providers.HttpProvider(
+        "http://127.0.0.1:9545"
+      );
       web3 = new Web3(App.web3Provider);
     }
 
@@ -43,17 +45,17 @@ const App = {
   },
 
   bindEvents: function() {
-    $(document).on('click', '#transfer-button', App.handleTransfer);
+    $(document).on("click", "#transfer-button", App.handleTransfer);
   },
 
   handleTransfer: function(event) {
     event.preventDefault();
     App.openLoading();
 
-    const amount = parseInt($('#transfer-amount').val());
-    const toAddress = $('#transfer-address').val();
+    const amount = parseInt($("#transfer-amount").val());
+    const toAddress = $("#transfer-address").val();
 
-    console.log('Transfer ' + amount + ' TT to ' + toAddress);
+    console.log("Transfer " + amount + " TT to " + toAddress);
 
     web3.eth.getAccounts(function(error, accounts) {
       if (error) {
@@ -62,28 +64,32 @@ const App = {
 
       var account = accounts[0];
 
-      App.contracts.TutorialToken.deployed().then(function(instance) {
-        return instance.transfer(toAddress, amount, {from: account, gas: 100000});
-      }).then(function(result) {
-        const $content = $($('#success-alert').html());
-        $content.find('#success-message').text(`Transaction ${result.tx}`);
-        $content.appendTo('#alert-slot');
+      App.contracts.TutorialToken.deployed()
+        .then(function(instance) {
+          return instance.transfer(toAddress, amount, {
+            from: account,
+            gas: 100000
+          });
+        })
+        .then(function(result) {
+          const $content = $($("#success-alert").html());
+          $content.find("#success-message").text(`Transaction ${result.tx}`);
+          $content.appendTo("#alert-slot");
 
-        return App.getBalances();
-      }).catch(function(err) {
-        console.log(err.message);
-        const $content = $($('#failed-alert').html());
-        $content.find('#error-message').text(err.message);
-        $content.appendTo('#alert-slot');
-        App.closeloading();
-      });
+          return App.getBalances();
+        })
+        .catch(function(err) {
+          console.log(err.message);
+          const $content = $($("#failed-alert").html());
+          $content.find("#error-message").text(err.message);
+          $content.appendTo("#alert-slot");
+          App.closeloading();
+        });
     });
   },
 
   getBalances: function() {
-    console.log('Getting balances...');
-
-    var tutorialTokenInstance;
+    console.log("Getting balances...");
 
     web3.eth.getAccounts(function(error, accounts) {
       if (error) {
@@ -92,35 +98,39 @@ const App = {
 
       const account = accounts[0];
 
-      App.contracts.TutorialToken.deployed().then(function(instance) {
-        tutorialTokenInstance = instance;
+      App.contracts.TutorialToken.deployed()
+        .then(function(instance) {
+          return instance.balanceOf(account);
+        })
+        .then(function(result) {
+          const balance = result.toNumber();
 
-        return tutorialTokenInstance.balanceOf(account);
-      }).then(function(result) {
-        const balance = result.toNumber();
-
-        $('#MY-balance').text(balance);
-      }).catch(function(err) {
-        console.log(err.message);
-      }).finally(function(){
-        App.closeloading()
-      });
+          $("#MY-balance").text(balance);
+        })
+        .catch(function(err) {
+          console.log(err.message);
+        })
+        .finally(function() {
+          App.closeloading();
+        });
     });
   },
 
   closeloading: function() {
-    $('#overlay').removeClass('d-flex').addClass('d-none');
+    $("#overlay")
+      .removeClass("d-flex")
+      .addClass("d-none");
   },
 
   openLoading: function() {
-    $('#overlay').removeClass('d-none').addClass('d-flex');
+    $("#overlay")
+      .removeClass("d-none")
+      .addClass("d-flex");
   }
-
-
 };
 
 $(function() {
-  $(window).on('load', function() {
+  $(window).on("load", function() {
     App.init();
   });
 });
