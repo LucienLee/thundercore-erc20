@@ -2,9 +2,8 @@ import Web3 from "Web3";
 import TruffleContract from "truffle-contract";
 
 import $ from "jquery";
-import "popper.js";
-import "bootstrap";
 
+// If you change the name of contract, make sure you set the right reference here
 import TutorialTokenArtifact from "../contracts/MyToken.json";
 
 const App = {
@@ -15,9 +14,20 @@ const App = {
     return App.initWeb3();
   },
 
-  initWeb3: function() {
+  initWeb3: async function() {
+    if (window.ethereum) {
+      try {
+        App.web3Provider = web3.currentProvider;
+        web3 = new Web3(ethereum);
+        await ethereum.enable();
+      } catch (e) {
+        console.error(e);
+        $content.find("#error-message").text("Need to request account access.");
+        return;
+      }
+    }
     // Initialize web3 and set the provider to the testRPC.
-    if (typeof web3 !== "undefined") {
+    else if (typeof web3 !== "undefined") {
       App.web3Provider = web3.currentProvider;
       web3 = new Web3(web3.currentProvider);
     } else {
@@ -55,7 +65,7 @@ const App = {
     const amount = parseInt($("#transfer-amount").val());
     const toAddress = $("#transfer-address").val();
 
-    console.log("Transfer " + amount + " TT to " + toAddress);
+    console.log("Transfer " + amount + " MT to " + toAddress);
 
     web3.eth.getAccounts(function(error, accounts) {
       if (error) {
@@ -129,8 +139,6 @@ const App = {
   }
 };
 
-$(function() {
-  $(window).on("load", function() {
-    App.init();
-  });
+$(window).on("load", function() {
+  App.init();
 });
