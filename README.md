@@ -1,7 +1,7 @@
 # Thundercore ERC-20 Token Example
 
 This example for "Deploy ERC-20 Token on ThunderCore". This is set up from [Thunder Box](https://github.com/thundercore/thunder-box)
-The tutorial article is [here]().
+The tutorial article is [here](https://developers.thundercore.com/docs/erc20-smart-contract).
 
 ![screenshot](https://raw.githubusercontent.com/LucienLee/thundercore-erc20/master/screenshot.png)
 
