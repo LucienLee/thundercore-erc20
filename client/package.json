@@ -11,13 +11,26 @@
   "author": "Lucien Lee <lucien@lucienlee.cc>",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-transform-runtime": "^7.4.4",
     "parcel-bundler": "^1.12.3"
   },
   "dependencies": {
+    "@babel/runtime": "^7.4.5",
     "bootstrap": "^4.3.1",
     "jquery": "^3.4.1",
     "popper.js": "^1.15.0",
     "truffle-contract": "^4.0.20",
-    "web3": "^1.0.0-beta.55"
-  }
+    "web3": "1.0.0-beta.37"
+  },
+  "comment": "locking web3 version due to https://github.com/ethereum/web3.js/issues/2362",
+  "babel": {
+    "plugins": [
+      "@babel/plugin-transform-runtime"
+    ]
+  },
+  "browserslist": [
+    ">0.25%",
+    "not op_mini all"
+  ]
 }

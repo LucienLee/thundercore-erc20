@@ -1,4 +1,4 @@
-import Web3 from "Web3";
+import Web3 from "web3";
 import TruffleContract from "truffle-contract";
 
 import $ from "jquery";
@@ -7,6 +7,7 @@ import $ from "jquery";
 import TutorialTokenArtifact from "../contracts/MyToken.json";
 
 const App = {
+  web3: null,
   web3Provider: null,
   contracts: {},
 
@@ -18,24 +19,26 @@ const App = {
     if (window.ethereum) {
       try {
         App.web3Provider = web3.currentProvider;
-        web3 = new Web3(ethereum);
+        App.web3 = new Web3(ethereum);
         await ethereum.enable();
       } catch (e) {
         console.error(e);
-        $content.find("#error-message").text("Need to request account access.");
+        const $content = $($("#failed-alert").html());
+        $content.find("#error-message").text(e.message);
+        $content.appendTo("#alert-slot");
         return;
       }
     }
     // Initialize web3 and set the provider to the testRPC.
     else if (typeof web3 !== "undefined") {
       App.web3Provider = web3.currentProvider;
-      web3 = new Web3(web3.currentProvider);
+      App.web3 = new Web3(web3.currentProvider);
     } else {
       // set the provider you want from Web3.providers
       App.web3Provider = new Web3.providers.HttpProvider(
         "http://127.0.0.1:9545"
       );
-      web3 = new Web3(App.web3Provider);
+      App.web3 = new Web3(App.web3Provider);
     }
 
     return App.initContract();
@@ -67,9 +70,10 @@ const App = {
 
     console.log("Transfer " + amount + " MT to " + toAddress);
 
-    web3.eth.getAccounts(function(error, accounts) {
+    App.web3.eth.getAccounts(function(error, accounts) {
       if (error) {
         console.log(error);
+        return;
       }
 
       var account = accounts[0];
@@ -101,9 +105,10 @@ const App = {
   getBalances: function() {
     console.log("Getting balances...");
 
-    web3.eth.getAccounts(function(error, accounts) {
+    App.web3.eth.getAccounts(function(error, accounts) {
       if (error) {
         console.log(error);
+        return;
       }
 
       const account = accounts[0];
