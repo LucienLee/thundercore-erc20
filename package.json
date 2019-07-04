@@ -1,5 +1,8 @@
 {
   "name": "thundercore-erc20",
+  "engines": {
+    "node": ">=8.0.0 <=10.16.0"
+  },
   "version": "1.0.0",
   "description": "ThunderCore ERC 20 token example",
   "main": "index.js",

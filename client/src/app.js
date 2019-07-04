@@ -2,6 +2,8 @@ import Web3 from "web3";
 import TruffleContract from "truffle-contract";
 
 import $ from "jquery";
+import "bootstrap/js/src/util";
+import "bootstrap/js/src/alert";
 
 // If you change the name of contract, make sure you set the right reference here
 import TutorialTokenArtifact from "../contracts/MyToken.json";
@@ -21,11 +23,9 @@ const App = {
         App.web3Provider = web3.currentProvider;
         App.web3 = new Web3(ethereum);
         await ethereum.enable();
-      } catch (e) {
-        console.error(e);
-        const $content = $($("#failed-alert").html());
-        $content.find("#error-message").text(e.message);
-        $content.appendTo("#alert-slot");
+      } catch (err) {
+        console.error(err);
+        App.showAlert(err.message, 'failed');
         return;
       }
     }
@@ -86,17 +86,13 @@ const App = {
           });
         })
         .then(function(result) {
-          const $content = $($("#success-alert").html());
-          $content.find("#success-message").text(`Transaction ${result.tx}`);
-          $content.appendTo("#alert-slot");
+          App.showAlert(`Transaction ${result.tx}`, 'success');
 
           return App.getBalances();
         })
         .catch(function(err) {
           console.log(err.message);
-          const $content = $($("#failed-alert").html());
-          $content.find("#error-message").text(err.message);
-          $content.appendTo("#alert-slot");
+          App.showAlert(err.message, 'failed');
           App.closeloading();
         });
     });
@@ -141,6 +137,12 @@ const App = {
     $("#overlay")
       .removeClass("d-none")
       .addClass("d-flex");
+  },
+
+  showAlert: function(message, type) {
+    const $content = $($(`#${type}-alert`).html());
+    $content.find("#error-message").text(message);
+    $content.appendTo("#alert-slot");
   }
 };
 
